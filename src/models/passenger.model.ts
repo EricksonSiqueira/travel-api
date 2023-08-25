@@ -23,15 +23,17 @@ export const passengerModel = {
   },
 
   async insert(passenger: Omit<Passenger, 'id'>) {
-    const passengerColumsToCreate = getFormattedColumnNames(passenger);
+    const columns = getFormattedColumnNames(passenger);
     const placeholders = getFormattedPlaceholders(passenger);
+    const query = `INSERT INTO passengers (${columns}) VALUE (${placeholders})`;
 
-    const [result] = await connection.execute(
-      `INSERT INTO passengers (${passengerColumsToCreate}) VALUES (${placeholders})`,
-      [Object.values(passenger)]
-    );
+    const [result] = await connection.execute(query, [
+      ...Object.values(passenger),
+    ]);
 
-    return result;
+    const { insertId } = result as { insertId: Passenger['id'] };
+
+    return insertId;
   },
 
   async update(
