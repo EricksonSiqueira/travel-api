@@ -2,7 +2,7 @@ version: '3'
 services:
   node:
     image: node:16.14
-    container_name: travel-api
+    container_name: travel_api
     # same as `docker run -it`
     tty: true
     stdin_open: true
@@ -16,19 +16,19 @@ services:
     ports:
       - 3001:3001
     environment:
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_PORT: 3306
-      MYSQL_HOST: database
-      PORT: 3001
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_HOST=database
+      - PORT=${API_PORT}
 
   database:
     image: mysql:8.0.29
     container_name: travel_db
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: traveldb
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=traveldb
     ports:
-      - 3306:3306
+      - ${MYSQL_PORT}:${MYSQL_PORT}
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
+      - ./db/:/docker-entrypoint-initdb.d
