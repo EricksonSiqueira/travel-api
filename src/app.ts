@@ -1,14 +1,10 @@
 import express from 'express';
-import { passengerModel } from './models';
+import { passengerRoute } from './routes';
 
 const app = express();
 
 app.use(express.json());
 
-app.get('/passengers', async (req, res) => {
-  const passengers = await passengerModel.findAll();
-
-  return res.status(200).json(passengers);
-});
+app.use('/passengers', passengerRoute);
 
 export default app;

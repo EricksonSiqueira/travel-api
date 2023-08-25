@@ -1,1 +1,3 @@
-export * from './passenger.model';
+import { passengerModel } from './passenger.model';
+
+export { passengerModel };
