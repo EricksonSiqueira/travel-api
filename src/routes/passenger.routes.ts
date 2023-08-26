@@ -1,7 +1,7 @@
 import StatusCode from '../types/statusCode';
 import { passengerModel } from '../models';
 import { Router } from 'express';
-import { passengerService } from '../services/passenger.service';
+import { passengerController } from '@/controllers/passenger.controller';
 
 const passengerRoute = Router();
 
@@ -25,20 +25,6 @@ passengerRoute.get('/:passengerId', async (req, res) => {
   return res.status(StatusCode.OK).json(passenger);
 });
 
-passengerRoute.post('/', async (req, res) => {
-  const { name, email, phone } = req.body;
-
-  const serviceResponse = await passengerService.createPassenger({
-    name,
-    email,
-    phone,
-  });
-
-  if (serviceResponse.status !== StatusCode.CREATED) {
-    return res.status(StatusCode.BAD_REQUEST).json(serviceResponse.message);
-  }
-
-  return res.status(StatusCode.CREATED).json(serviceResponse.passenger);
-});
+passengerRoute.post('/', passengerController.createPassenger);
 
 export { passengerRoute };
