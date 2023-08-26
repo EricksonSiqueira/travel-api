@@ -1,7 +1,8 @@
 import StatusCode from '../types/statusCode';
 import { passengerModel } from '../models';
 import { Router } from 'express';
-import { passengerController } from '@/controllers/passenger.controller';
+import { passengerController } from '../controllers';
+import { passangerMiddleware } from '../middlewares';
 
 const passengerRoute = Router();
 
@@ -25,6 +26,10 @@ passengerRoute.get('/:passengerId', async (req, res) => {
   return res.status(StatusCode.OK).json(passenger);
 });
 
-passengerRoute.post('/', passengerController.createPassenger);
+passengerRoute.post(
+  '/',
+  passangerMiddleware.validateCreatePassenger,
+  passengerController.createPassenger
+);
 
 export { passengerRoute };
