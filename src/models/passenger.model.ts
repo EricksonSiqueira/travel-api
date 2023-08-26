@@ -12,6 +12,7 @@ export const passengerModel = {
 
     return camelizeKeys(passengers) as Passenger[];
   },
+
   async findById(id: Passenger['id']) {
     const [result] = await connection.execute(
       'SELECT * FROM passengers WHERE id = ?',

@@ -23,4 +23,10 @@ export const passengerService = {
 
     return { status: StatusCode.CREATED, passenger: newPassenger };
   },
+
+  async findAll() {
+    const passengers = passengerModel.findAll();
+
+    return passengers;
+  },
 };

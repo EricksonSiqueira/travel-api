@@ -15,4 +15,10 @@ export const passengerController = {
       .status(passangerServiceResponse.status)
       .json(passangerServiceResponse.passenger);
   },
+
+  async findAll(_req: Request, res: Response) {
+    const passengers = await passengerService.findAll();
+
+    return res.status(200).json(passengers);
+  },
 };
